@@ -1,0 +1,33 @@
+@import "../valo/valo";
+
+.todo {
+	@include valo;
+}
+
+.v-nativebutton-borderless {
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}
+
+.v-label-strike {
+	text-decoration: line-through;
+}
+
+.FontAwesome {
+	font-size: 20px;
+}
+
+.v-select-optiongroup-horizontal 
+	.v-select-option {
+    	display: inline-block;
+	}
+
+.v-select-optiongroup-horizontal {
+    white-space: nowrap;
+}
+
+.v-select-optiongroup-horizontal
+  .v-select-option.v-radiobutton {
+    padding-right: 10px;
+}
