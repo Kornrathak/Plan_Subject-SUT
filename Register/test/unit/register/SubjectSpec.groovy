@@ -15,14 +15,53 @@ class SubjectSpec extends Specification {
     def cleanup() {
     }
 	
+	void "test26"() {
+		given:
+			def sub = new Subject()
+		when:
+			sub.code = "523101"
+			sub.name = "Computer Programing I"
+			sub.time = "Mon 10:00-11:00;"
+			sub.sectiongroup = 999
+			sub.status = 2
+		then:
+			sub.validate() == false
+	}
+	
+	void "test27"() {
+		given:
+			def sub = new Subject()
+		when:
+			sub.code = "523101"
+			sub.name = "Computer Programing I"
+			sub.time = "Mon 10:00-11:00;"
+			sub.sectiongroup = 1000
+		then:
+			sub.validate() == false
+	}
+	
+	void "test26"() {
+		given:
+			def sub = new Subject()
+		when:
+			sub.code = "523101"
+			sub.name = "Computer Programing I"
+			sub.time = "Mon 10:00-11:00;"
+			sub.sectiongroup = 999
+			sub.status = 1
+		then:
+			sub.validate() == true
+	}
+	
 	void "test25"() {
 		given:
 			def sub = new Subject()
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1000
+			sub.status = 0
 		then:
 			sub.validate() == false
 	}
@@ -33,8 +72,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 0
+			sub.status = 0
 		then:
 			sub.validate() == false
 	}
@@ -45,8 +85,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 999
+			sub.status = 0
 		then:
 			sub.validate() == true
 	}
@@ -57,8 +98,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = id
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == result
 		where:
@@ -85,8 +127,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "52310" + i
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == false
 		where:
@@ -99,8 +142,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "5231" + i + '1'
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == false
 		where:
@@ -113,8 +157,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523" + i + "01"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == false
 		where:
@@ -127,8 +172,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "52" + i + "101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == false
 		where:
@@ -141,8 +187,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = '5' + i + "3101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == false
 		where:
@@ -155,8 +202,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "52310" + i
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 		where:
@@ -169,8 +217,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "5231" + i + '1'
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 		where:
@@ -183,8 +232,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523" + i + "01"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 		where:
@@ -197,8 +247,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "52" + i + "101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 		where:
@@ -211,8 +262,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = '5' + i + "3101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 		where:
@@ -225,8 +277,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = i + "23101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == false
 		where:
@@ -239,8 +292,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = i + "23101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 		where:
@@ -253,8 +307,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 12345
+			sub.status = 0
 		then:
 			sub.validate() == false
 	}
@@ -265,8 +320,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1234
+			sub.status = 0
 		then:
 			sub.validate() == false
 	}
@@ -277,8 +333,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 123
+			sub.status = 0
 		then:
 			sub.validate() == true
 	}
@@ -289,8 +346,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 12
+			sub.status = 0
 		then:
 			sub.validate() == true
 	}
@@ -301,8 +359,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
 	}
@@ -313,8 +372,9 @@ class SubjectSpec extends Specification {
 		when:
 			sub.code = "523101"
 			sub.name = "Computer Programing I"
-			sub.time = "Mon 10:00-11:00"
+			sub.time = "Mon 10:00-11:00;"
 			sub.sectiongroup = 1
+			sub.status = 0
 		then:
 			sub.validate() == true
     }

@@ -6,9 +6,11 @@ class Subject {
 	String name
 	String time
 	Integer sectiongroup
+	Integer status
 
     static constraints = {
 		code(matches: /\d+/, size: 6..6)
 		sectiongroup(matches: /\d+/, max: 999, min: 1)
+		status(inList: [0, 1])
     }
 }

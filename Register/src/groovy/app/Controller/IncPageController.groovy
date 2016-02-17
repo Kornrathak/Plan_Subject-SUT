@@ -21,6 +21,7 @@ class IncPageController{
 			sub.setName(name)
 			sub.setSectiongroup(Integer.parseInt(sec))
 			sub.setTime(getTimes(time))
+			sub.setStatus(0)
 			sub = sub.save()
 			return 0;
 		}
