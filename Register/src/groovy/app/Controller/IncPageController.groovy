@@ -19,11 +19,23 @@ class IncPageController{
 			Subject sub = new Subject()
 			sub.setCode(code)
 			sub.setName(name)
-			sub.setSection(sec)
-			sub.setTime(time)
+			sub.setSectiongroup(Integer.parseInt(sec))
+			sub.setTime(getTimes(time))
 			sub = sub.save()
-			return 0
+			return 0;
 		}
+	}
+	
+	public String getTimes(String time){
+		ArrayList point = new ArrayList()
+		for(int i = 0; i < time.length(); i++){
+			if(time.charAt(i) == ':' || time.charAt(i) == ' '){
+				point.add(i)
+			}
+		}
+		if(point.size() == 6)time = time.substring(0, point.get(2) + 3) + ';' + time.substring(point.get(2) + 4) + ';'
+		else if(point.size() == 3)time = time + ';'
+		return time
 	}
 	
 	public Label setCapMessage(Label label, int num){
@@ -42,25 +54,66 @@ class IncPageController{
 	
 	private int checkString(String item, int j){
 		int chk = 0
+		ArrayList point = new ArrayList()
 		if(j == 0){
 			for(int i = 0; i < item.length(); i++){
-				if(item.charAt(i) > '9' || item.charAt(i) < '0') chk = 1
+				if(item.charAt(i) > '9' || item.charAt(i) < '0') return 1;
 			}
+			return 0;
 		}
 		else if(j == 1){
 			for(int i = 0; i < item.length(); i++){
-				if(item.charAt(i) == '\n'){
-					println("true")
-					item = item.substring(0, i) + ";" + item.substring(i, item.length())
-					println(item)
-					break;
-				}
-				else {
-					println("false")
+				if(item.charAt(i) == ':' || item.charAt(i) == ' '){
+					point.add(i)
 				}
 			}
-			chk = 1
+			if(point.size() == 6){
+				item = item.substring(0, point.get(2) + 3) + ';' + item.substring(point.get(2) + 4) + ';'
+				
+				String dayone = item.substring(0, point.get(2) + 4)
+				String daytwo = item.substring(point.get(2) + 4)
+				
+				if(	item.substring(0, point.get(0)).equals("Mon") == true ||
+					item.substring(0, point.get(0)).equals("Tu") == true ||
+					item.substring(0, point.get(0)).equals("Wed") == true ||
+					item.substring(0, point.get(0)).equals("Thu") == true ||
+					item.substring(0, point.get(0)).equals("Fri") == true ||
+					item.substring(0, point.get(0)).equals("Sat") == true ||
+					item.substring(0, point.get(0)).equals("Sun") == true) chk++
+				else return 1;
+				
+				if(	item.substring(point.get(2) + 4, point.get(3)).equals("Mon") == true ||
+					item.substring(point.get(2) + 4, point.get(3)).equals("Tu") == true ||
+					item.substring(point.get(2) + 4, point.get(3)).equals("Wed") == true ||
+					item.substring(point.get(2) + 4, point.get(3)).equals("Thu") == true ||
+					item.substring(point.get(2) + 4, point.get(3)).equals("Fri") == true ||
+					item.substring(point.get(2) + 4, point.get(3)).equals("Sat") == true ||
+					item.substring(point.get(2) + 4, point.get(3)).equals("Sun") == true) chk++
+				else return 1;
+
+				if(chk != 2) return 1;
+				else{
+					if(checkTime(item.substring(point.get(0) + 1, point.get(2) + 3)) == 1) return 1;
+					else if(checkTime(item.substring(point.get(4) - 2, item.length() - 1)) == 1) return 1;
+				}
+			}
+			else if(point.size() == 3){
+				item = item + ';'
+				if(item.substring(0, point.get(0)).equals("Mon") == true || item.substring(0, point.get(0)).equals("Tu") == true || item.substring(0, point.get(0)).equals("Wed") == true || item.substring(0, point.get(0)).equals("Thu") == true || item.substring(0, point.get(0)).equals("Fri") == true || item.substring(0, point.get(0)).equals("Sat") == true || item.substring(0, point.get(0)).equals("Sun") == true){
+					if(checkTime(item.substring(point.get(0) + 1, point.get(2) + 3)) == 1) return 1;
+					else return 0;
+				}
+				else return 1;
+			}
+			return 0;
 		}
-		return chk
+	}
+	
+	private int checkTime(String time){
+		for(int i = 0; i < time.length(); i++){
+			if(time.charAt(i) == ':' || time.charAt(i) == '-') i++
+			if(time.charAt(i) < '0' || time.charAt(i) > '9') return 1;
+		}
+		return 0;
 	}
 }

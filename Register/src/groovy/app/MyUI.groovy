@@ -13,8 +13,10 @@ import com.vaadin.ui.MenuBar.Command
 import com.vaadin.ui.*
 
 import app.IncreasePage
+import app.SubjectPage
 
 import app.Controller.IncPageController
+import app.Controller.SubjectPageController
 
 @Theme("todo")
 class MyUI extends UI {
@@ -26,6 +28,9 @@ class MyUI extends UI {
 		
 		IncPageController incCon = new IncPageController()
 		this.getSession().setAttribute("increase", incCon)
+		
+		SubjectPageController subCon = new SubjectPageController()
+		this.getSession().setAttribute("subject", subCon)
 		
 		Panel home = homePage()
 		
@@ -70,7 +75,9 @@ class MyUI extends UI {
 						
                     break
 					case 3: // have subject
-						
+						SubjectPage subPage = new SubjectPage()
+						layout.addComponent(subPage)
+						k++
                     break
 					case 4: // add subject
 						IncreasePage incPage = new IncreasePage()
