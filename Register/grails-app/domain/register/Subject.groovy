@@ -7,6 +7,8 @@ class Subject {
 	String time
 	Integer sectiongroup
 	Integer status
+	
+	static hasMany = [itemes: HavingSubject]
 
     static constraints = {
 		code(matches: /\d+/, size: 6..6)

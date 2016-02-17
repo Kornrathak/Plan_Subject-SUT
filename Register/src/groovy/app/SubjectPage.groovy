@@ -14,6 +14,9 @@ import app.Controller.SubjectPageController
 
 class SubjectPage extends CustomComponent {
 	public SubjectPage(){
+	
+		int no = 1
+		
 		Panel editPanel = new Panel("List of Subject")
 		Panel p1List = new Panel()
 		Panel p2Plan = new Panel()
@@ -54,6 +57,7 @@ class SubjectPage extends CustomComponent {
 		t1plan.addContainerProperty("Subject", String.class, null)
 		
 		g1Subject = getController().getListSubject(g1Subject)
+		g2Plan = getController().getListPlan(g2Plan)
 		l1notfound.setValue("Not Found")
 		l1notfound.setStyleName("h1")
 		l1notfound.setSizeUndefined()
@@ -85,7 +89,7 @@ class SubjectPage extends CustomComponent {
 		
 		setCompositionRoot(editPanel)
 		
-		b2delete.addClickListener({ event ->
+		b2delete.addClickListener({ event2 ->
 			getController().setDeleteSubject((ArrayList)g1Subject.getValue())
 			if(getController().checkList() == 1){
 				g1Subject.removeAllItems()
@@ -95,6 +99,16 @@ class SubjectPage extends CustomComponent {
 				g1Subject.setVisible(false)
 				l1notfound.setVisible(true)
 			}
+		} as Button.ClickListener)
+		
+		b3create.addClickListener({ event3 ->
+			g2Plan = getController().createChoise(g2Plan)
+		} as Button.ClickListener)
+		
+		b4delete.addClickListener({ event4 ->
+			getController().setDeletePlan(g2Plan.getValue())
+			g2Plan.removeAllItems()
+			g2Plan = getController().getListPlan(g2Plan)
 		} as Button.ClickListener)
 	}
 	
