@@ -55,6 +55,7 @@ class SubjectPage extends CustomComponent {
 		
 		t1plan.addContainerProperty("Plan", String.class, null)
 		t1plan.addContainerProperty("Subject", String.class, null)
+		t1plan = getController().getPlanningTable(t1plan)
 		
 		g1Subject = getController().getListSubject(g1Subject)
 		g2Plan = getController().getListPlan(g2Plan)
@@ -88,6 +89,29 @@ class SubjectPage extends CustomComponent {
 		layout.setExpandRatio(p1List, 1.0f)
 		
 		setCompositionRoot(editPanel)
+		
+		b1select.addClickListener({ event1 ->
+			int chk = getController().setPlanning(g2Plan.getValue(), (ArrayList)g1Subject.getValue())
+			switch(chk){
+				case 99:
+					Notification.show("!!Please!! Choose Planning and Subject", Notification.Type.TRAY_NOTIFICATION)
+				break;
+				case 98:
+					Notification.show("!!Please!! Choose Planning", Notification.Type.TRAY_NOTIFICATION)
+				break;
+				case 97:
+					Notification.show("!!Please!! Choose Subject", Notification.Type.TRAY_NOTIFICATION)
+				break;
+				case 0:
+					Notification.show("Complete!!", Notification.Type.TRAY_NOTIFICATION)
+					if(t1plan.isEmpty() == false){
+						t1plan.removeAllItems()
+						t1plan = getController().getPlanningTable(t1plan)
+					}
+					else t1plan = getController().getPlanningTable(t1plan)
+				break;
+			}
+		} as Button.ClickListener)
 		
 		b2delete.addClickListener({ event2 ->
 			getController().setDeleteSubject((ArrayList)g1Subject.getValue())

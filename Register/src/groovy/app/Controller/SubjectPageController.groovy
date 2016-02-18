@@ -1,11 +1,55 @@
 package app.Controller
 
+import com.*
 import com.vaadin.ui.*
+import com.vaadin.ui.Table
+import com.vaadin.ui.Table.ColumnGenerator
+import com.vaadin.ui.Table.ColumnResizeEvent
+import com.vaadin.ui.Table.HeaderClickEvent
+import com.vaadin.ui.TableFieldFactory
+import com.vaadin.data.*
+import com.vaadin.data.Container
+import com.vaadin.data.Item
+import com.vaadin.data.Property
+import java.util.*
 
 import register.Subject
 import register.Planning
+import register.HavingSubject
 
 class SubjectPageController{
+
+	public Table getPlanningTable(Table table){
+		def list = HavingSubject.executeQuery("from HavingSubject")
+		if(list.isEmpty() == false){
+			ArrayList item = new ArrayList()
+			for(element in list){
+				item.add(element.plan.name)
+				item.add(element.sub.name)
+			}
+			println(item)
+			/*for(int i = 0; i < item.size(); i++){
+				table.addItem(new Object[]{item.get(i), item.get(i + 1)}, i+1)
+			}*/
+		}
+		table.setPageLength(10)
+		return table
+	}
+
+	public int setPlanning(Planning plan, ArrayList sub){
+		if(plan == null && sub.isEmpty() == true) return 99;
+		else if(plan == null) return 98;
+		else if(sub.isEmpty() == true) return 97;
+		else{
+			for(int i = 0; i < sub.size(); i++){
+				HavingSubject hav = new HavingSubject()
+				hav.setPlan(plan)
+				hav.setSub(sub.get(i))
+				hav = hav.save()
+			}
+			return 0;
+		}
+	}
 
 	public OptionGroup getListPlan(OptionGroup list){
 		def num = Planning.executeQuery("from Planning where status = 0")
@@ -38,10 +82,13 @@ class SubjectPageController{
 	}
 	
 	public void setDeletePlan(Planning plan){
-		plan.status = 1
-		plan.withTransaction{
-			plan = plan.save()
+		if(plan != null){
+			plan.status = 1
+			plan.withTransaction{
+				plan = plan.save()
+			}
 		}
+		else Notification.show("!!Please!! Choose Planning", Notification.Type.TRAY_NOTIFICATION)
 	}
 
 	public void setDeleteSubject(ArrayList list){
