@@ -39,6 +39,7 @@ class HavingSubjectSpec extends Specification {
 		when:
 			hav.plan = new Planning()
 			hav.sub = new Subject()
+			hav.code = "Planning 1"
 		then:
 			hav.validate() == true
     }

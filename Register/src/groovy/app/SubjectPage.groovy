@@ -20,9 +20,9 @@ class SubjectPage extends CustomComponent {
 		Panel editPanel = new Panel("List of Subject")
 		Panel p1List = new Panel()
 		Panel p2Plan = new Panel()
-		HorizontalLayout layout = new HorizontalLayout()
 		HorizontalLayout h1button = new HorizontalLayout()
 		HorizontalLayout h2button = new HorizontalLayout()
+		VerticalLayout layout = new VerticalLayout()
 		VerticalLayout v1Subject = new VerticalLayout()
 		VerticalLayout v2Plan = new VerticalLayout()
 		OptionGroup g1Subject = new OptionGroup("Subject")
@@ -39,7 +39,7 @@ class SubjectPage extends CustomComponent {
 		p1List.setContent(v1Subject)
 		p1List.setWidth("100%")
 		p2Plan.setContent(v2Plan)
-		p2Plan.setWidth("500px")
+		p2Plan.setWidth("100%")
 		
 		layout.setSizeFull()
 		layout.setMargin(true)
@@ -55,6 +55,8 @@ class SubjectPage extends CustomComponent {
 		
 		t1plan.addContainerProperty("Plan", String.class, null)
 		t1plan.addContainerProperty("Subject", String.class, null)
+		t1plan.setColumnWidth("Plan", 130)
+		t1plan.setColumnWidth("Subject", 1024)
 		t1plan = getController().getPlanningTable(t1plan)
 		
 		g1Subject = getController().getListSubject(g1Subject)
@@ -104,11 +106,8 @@ class SubjectPage extends CustomComponent {
 				break;
 				case 0:
 					Notification.show("Complete!!", Notification.Type.TRAY_NOTIFICATION)
-					if(t1plan.isEmpty() == false){
-						t1plan.removeAllItems()
-						t1plan = getController().getPlanningTable(t1plan)
-					}
-					else t1plan = getController().getPlanningTable(t1plan)
+					t1plan.removeAllItems()
+					t1plan = getController().getPlanningTable(t1plan)
 				break;
 			}
 		} as Button.ClickListener)

@@ -21,18 +21,45 @@ class SubjectPageController{
 
 	public Table getPlanningTable(Table table){
 		def list = HavingSubject.executeQuery("from HavingSubject")
+		def check = Planning.executeQuery("from Planning")
 		if(list.isEmpty() == false){
-			ArrayList item = new ArrayList()
-			for(element in list){
-				item.add(element.plan.name)
-				item.add(element.sub.name)
+			ArrayList planes = new ArrayList()
+			ArrayList subes = new ArrayList()
+			ArrayList point = new ArrayList()
+			for(int i = 0; i < check.size(); i++) {
+				for(int j = 0; j < list.size(); j++) {
+					if(check.get(i).name.equals(list.get(j).code) == true) point.add(j)
+				}
 			}
-			println(item)
-			/*for(int i = 0; i < item.size(); i++){
-				table.addItem(new Object[]{item.get(i), item.get(i + 1)}, i+1)
+			for(element in list){
+				planes.add(element.plan.name)
+				subes.add(element.sub.name)
+			}
+			println(planes)
+			println(subes)
+			println(point)
+			/*String temp = ""
+			for(int i = 0; i < point.size() - 1; i++){
+				if(point.get(i) > point.get(i + 1)){
+					temp += (subes.get(point.get(i)))
+					Object newItemId = table.addItem()
+					Item row1 = table.getItem(newItemId)
+					row1.getItemProperty("Plan").setValue(planes.get(point.get(i)))
+					row1.getItemProperty("Subject").setValue(temp)
+					temp = ""
+				}
+				else temp += (subes.get(point.get(i)) + " | ")
+				if(i == point.size() - 2){
+					temp += (subes.get(point.get(i + 1)))
+					Object newItemId = table.addItem()
+					Item row1 = table.getItem(newItemId)
+					row1.getItemProperty("Plan").setValue(planes.get(point.get(i)))
+					row1.getItemProperty("Subject").setValue(temp)
+				}
 			}*/
 		}
 		table.setPageLength(10)
+		table.setSelectable(true)
 		return table
 	}
 
@@ -43,6 +70,7 @@ class SubjectPageController{
 		else{
 			for(int i = 0; i < sub.size(); i++){
 				HavingSubject hav = new HavingSubject()
+				hav.setCode(plan.name)
 				hav.setPlan(plan)
 				hav.setSub(sub.get(i))
 				hav = hav.save()
